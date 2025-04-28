@@ -11,18 +11,18 @@ const popup = document.querySelector(".popup");
 editsave.addEventListener("click", function () {
   h1.textContent = editname.value;
   h2.textContent = sub.value;
-  popup.classList.add("popup__hidden");
+  popup.classList.add("popup-hidden");
   popup.classList.remove("popup");
 });
 
 editprofile.addEventListener("click", function () {
   editname.value = h1.textContent;
   sub.value = h2.textContent;
-  popup.classList.remove("popup__hidden");
+  popup.classList.remove("popup-hidden");
   popup.classList.add("popup");
 });
 
 closepopup.addEventListener("click", function () {
-  popup.classList.add("popup__hidden");
+  popup.classList.add("popup-hidden");
   popup.classList.remove("popup");
 });
