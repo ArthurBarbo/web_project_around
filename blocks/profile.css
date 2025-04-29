@@ -27,7 +27,6 @@
 .profile__name {
   max-width: 373px;
   width: 100%;
-  font-family: "Inter";
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
@@ -38,7 +37,6 @@
 .profile__description {
   max-width: 415px;
   width: 100%;
-  font-family: "Inter";
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;

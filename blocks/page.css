@@ -6,6 +6,7 @@
   padding: 0 27px;
   width: 100%;
   box-sizing: border-box;
+  font-family: "Inter";
 }
 
 @media screen and (max-width: 880px) {
@@ -14,11 +15,10 @@
   }
 }
 
-/* .page__section { */
-/* width: 100%; */
-/* max-width: 880px; */
-/* box-sizing: border-box; */
-/* position: relative; */
-/* margin: 0 auto; */
-/* padding: 0 27px; */
-/* } */
+
+
+
+
+
+
+

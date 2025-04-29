@@ -1,7 +1,4 @@
-.popup-hidden {
-  display: none;
-}
-.popup{
+.popup {
   background-color: rgba(0, 0, 0, 0.507);
   margin: auto;
   top: 0;
@@ -13,6 +10,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.popup-hidden {
+  display: none;
 }
 
 .popup__conteiner {
@@ -42,7 +43,6 @@
 
 .popup__text {
   width: 330px;
-  font-family: "Inter";
   font-weight: 900;
   font-size: 24px;
   margin: 0 0 54px;
