@@ -3,7 +3,6 @@ const title = document.querySelector("h1");
 const editname = form.querySelector("#name");
 const description = document.querySelector(".profile__description");
 
-
 const about = form.querySelector("#about");
 const editprofile = document.querySelector(".profile__pen");
 const closepopup = document.querySelector("#close");
