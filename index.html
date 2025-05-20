@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lugares ao redor do USA" />
+    <meta name="Author" content="Arthur Oliveira" />
+    <meta name="Keywords" content="redes sociais,U.S.A,tripleten,Paisagens" />
+    <title>Around Us</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+  </head>
+  <body class="page">
+    <header class="header page__section">
+      <img
+        class="header__vetor"
+        src="./images/header_around.svg"
+        alt="'Around the Us' escrito em branco"
+      />
+    </header>
+    <main class="main page__section">
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/avatar.jpg"
+          alt="Jacques Cousteau, foto de perfil"
+        />
+        <div class="profile__text">
+          <h1 class="profile__name">Jacques Cousteau</h1>
+          <button
+            class="profile__pen"
+            type="button"
+            aria-label="edit profile"
+          ></button>
+          <h2 class="profile__description">Explorador</h2>
+        </div>
+        <button
+          class="profile__plus"
+          type="button"
+          aria-label="edit card"
+        ></button>;
+      </section>
+      <section class="elements">
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/Brand_Austria-min.jpg"
+            alt="Brand, Austria"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Brand</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/Chicagousa-min.jpg"
+            alt="Chicago, USA"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Chicago</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/cinqueterreITALY-min.jpg"
+            alt="Cinque Terre, Itália"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Cinque Terre</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/hawaii-min.jpg"
+            alt="Hawaii, USA"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Hawaii</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/Okinawa-japan-min.jpg"
+            alt="Okinawa, Japão"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Okinawa</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+
+        <article class="elements__card">
+          <img
+            class="elements__image"
+            src="./images/KinavahMaldives-min.jpg"
+            alt="Kihavah, Maldivas"
+          />
+          <button
+            class="elements__remove"
+            type="button"
+            aria-label="trash"
+          ></button>
+
+          <div class="elements__caption">
+            <p class="elements__text">Kihavah</p>
+            <button
+              class="elements__like"
+              type="button"
+              aria-label="Like"
+            ></button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer page__section">
+      <p class="footer__copyright">© 2025 Around The U.S.</p>
+    </footer>
+    <div class="popup popup-hidden">
+      <div class="popup__conteiner">
+        <button
+          class="popup__close"
+          id="close"
+          type="button"
+          aria-label="close form"
+        ></button>
+        <h2 class="popup__text">Editar perfil</h2>
+        <form class="popup__profile">
+          <label for="name"></label>
+          <input
+            class="popup__name"
+            type="text"
+            id="name"
+            placeholder="Nome"
+            value="Jacques Cousteau"
+            required
+          />
+          <label for="about"></label>
+          <input
+            class="popup__about"
+            type="text"
+            id="about"
+            placeholder="Sobre mim"
+            value="Explorador"
+            required
+          />
+          <button class="popup__save" type="submit" aria-label="save form">
+            Salvar
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-hidden" id="popup-addpic">
+      <div class="popup__conteiner">
+        <button class="popup__close" type="button"></button>
+        <h2 class="popup__text">Novo Local</h2>
+        <form class="popup__addpic" id="place">
+          <input
+            class="popup__name"
+            id="local-name"
+            type="text"
+            placeholder="Título"
+            required
+          />
+          <input
+            class="popup__about"
+            id="link"
+            type="url"
+            placeholder="Link de Imagem"
+            required
+          />
+          <button class="popup__save" id="save" type="submit">Criar</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-hidden" id="popup">
+      <div class="popup__conteiner-zoom">
+        <button class="popup__close-zoom" type="button"></button>
+        <img
+          class="popup__zoom"
+          id="popupimg"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+          alt="pixel para validação"
+        />
+        <p class="popup__caption" id="popupCaption"></p>
+      </div>
+    </div>
+
+    <template id="cardTemplate">
+      <article class="elements__card">
+        <img class="elements__image" src="" alt="" />
+        <button
+          class="elements__remove"
+          type="button"
+          aria-label="trash"
+        ></button>
+        <div class="elements__caption">
+          <p class="elements__text"></p>
+          <button
+            class="elements__like"
+            type="button"
+            aria-label="Like"
+          ></button>
+        </div>
+      </article>
+    </template>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>
