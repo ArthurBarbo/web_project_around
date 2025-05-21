@@ -107,26 +107,24 @@
 }
 
 .popup__zoom {
-  width: 433px;
-  height: 540px;
+  max-width: 75vw;
+  max-height: 75vh;
+  object-fit: cover;
 }
 
 .popup__conteiner-zoom {
-  width: 433px;
-  height: 540px;
-  background-color: white;
   box-sizing: border-box;
   position: relative;
 }
 .popup__caption {
-  width: 291px;
+
   height: 12px;
   font-weight: 400;
   font-size: 12px;
   line-height: 100%;
   color: #fff;
   margin: 10px auto 0;
-  padding-right: 142px;
+
 }
 
 @media screen and (max-width: 632px) {
@@ -160,20 +158,5 @@
     height: 46px;
     font-size: 14px;
   }
-  .popup__conteiner-zoom {
-    width: 240px;
-    height: 299px;
-    background-color: white;
-    box-sizing: border-box;
-    position: relative;
-  }
-  .popup__zoom {
-    width: 240px;
-    height: 299px;
-  }
-  .popup__caption {
-    padding: 0;
-    width: 240px;
-    height: 12px;
-  }
+
 }
