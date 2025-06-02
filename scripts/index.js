@@ -28,16 +28,53 @@ const likeBtn = document.querySelectorAll(".elements__like");
   popup.classList.add("popup");
 });
 
-/*close*/ document
+/*close e reset*/ document
   .querySelectorAll(".popup__close,.popup__close-zoom")
   .forEach((button) => {
     button.addEventListener("click", () => {
       const popup = button.closest(".popup");
       if (popup) {
         popup.classList.add("popup-hidden");
+
+        const form = popup.querySelector("form");
+        if(form){
+          form.reset();
+          const inputs = form.querySelectorAll("input");
+          inputs.forEach((input)=>{
+            input.classList.remove("popup__input_type_error");
+            const errorSpan = form.querySelector(`#${input.id}-error`);
+            if (errorSpan) {
+              errorSpan.textContent = "";
+              errorSpan.classList.remove("popup__error_visible")
+            }
+
+          })
+        }
       }
     });
   });
+// fechar fora do overlay
+  document.querySelectorAll('.popup').forEach(popup => {
+  popup.addEventListener('click', function (event) {
+    if(event.target===event.currentTarget) {
+      popup.classList.add("popup-hidden");
+    }
+  });
+ });
+
+ // escape
+ const popups = document.querySelectorAll(".popup");
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      popups.forEach(popup=>{
+        if(!popup.classList.contains("popup-hidden")){
+          popup.classList.add("popup-hidden");
+        }
+      });
+    }
+
+    });
+
 
 /*botao de abrir o adicionar*/ addpic.addEventListener("click", function () {
   photoAdd.classList.remove("popup-hidden");
@@ -117,6 +154,7 @@ function createCard(imageSrc, titleText) {
     zoompopup.classList.remove("popup-hidden");
   });
 
+
   document.querySelector(".elements").prepend(clone);
 }
 
@@ -150,3 +188,21 @@ const initialCards = [
 initialCards.forEach((card) => {
   createCard(card.link, card.name);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
