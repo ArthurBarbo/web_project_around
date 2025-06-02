@@ -164,8 +164,8 @@
   }
   .popup__text {
     width: 238px;
-    margin-bottom: 76px;
     font-size: 18px;
+
   }
   .popup__name {
     width: 238px;
@@ -173,12 +173,18 @@
   }
   .popup__about {
     width: 238px;
-    margin-bottom: 46px;
     font-size: 14px;
+    margin: 20px 0 0;
   }
   .popup__save {
     width: 238px;
     height: 46px;
     font-size: 14px;
+    margin-top: 25px;
+  }
+
+  .popup__error{
+    width: 220px;
+
   }
 }
