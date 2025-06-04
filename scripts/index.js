@@ -28,7 +28,8 @@ const likeBtn = document.querySelectorAll(".elements__like");
   popup.classList.add("popup");
 });
 
-/*close e reset*/ document
+/*close e reset*/
+document
   .querySelectorAll(".popup__close,.popup__close-zoom")
   .forEach((button) => {
     button.addEventListener("click", () => {
@@ -37,49 +38,52 @@ const likeBtn = document.querySelectorAll(".elements__like");
         popup.classList.add("popup-hidden");
 
         const form = popup.querySelector("form");
-        if(form){
+        if (form) {
           form.reset();
           const inputs = form.querySelectorAll("input");
-          inputs.forEach((input)=>{
+          inputs.forEach((input) => {
             input.classList.remove("popup__input_type_error");
             const errorSpan = form.querySelector(`#${input.id}-error`);
             if (errorSpan) {
               errorSpan.textContent = "";
-              errorSpan.classList.remove("popup__error_visible")
+              errorSpan.classList.remove("popup__error_visible");
             }
-
-          })
+          });
         }
       }
     });
   });
+
 // fechar fora do overlay
-  document.querySelectorAll('.popup').forEach(popup => {
-  popup.addEventListener('click', function (event) {
-    if(event.target===event.currentTarget) {
+
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup.addEventListener("click", function (event) {
+    if (event.target === event.currentTarget) {
       popup.classList.add("popup-hidden");
     }
   });
- });
+});
 
- // escape
- const popups = document.querySelectorAll(".popup");
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      popups.forEach(popup=>{
-        if(!popup.classList.contains("popup-hidden")){
-          popup.classList.add("popup-hidden");
-        }
-      });
-    }
-
+// escape
+const popups = document.querySelectorAll(".popup");
+document.addEventListener("keydown", (evt) => {
+  if (evt.key === "Escape") {
+    popups.forEach((popup) => {
+      if (!popup.classList.contains("popup-hidden")) {
+        popup.classList.add("popup-hidden");
+      }
     });
+  }
+});
 
+/*botao de abrir o adicionar*/
 
-/*botao de abrir o adicionar*/ addpic.addEventListener("click", function () {
+addpic.addEventListener("click", function () {
   photoAdd.classList.remove("popup-hidden");
 });
+
 // botões de remover
+
 document.querySelectorAll(".elements__remove").forEach((button) => {
   button.addEventListener("click", function () {
     const card = this.closest(".elements__card");
@@ -90,6 +94,7 @@ document.querySelectorAll(".elements__remove").forEach((button) => {
 });
 
 // efeitos de zoom
+
 imageCards.forEach((img) => {
   img.addEventListener("click", function () {
     zoomImg.src = img.src;
@@ -108,6 +113,7 @@ imageCards.forEach((img) => {
 });
 
 // botão de like
+
 document.querySelectorAll(".elements__like").forEach((button) => {
   button.addEventListener("click", function () {
     button.classList.toggle("elements__like-on");
@@ -115,6 +121,7 @@ document.querySelectorAll(".elements__like").forEach((button) => {
 });
 
 // criação de card
+
 const newcard = document.getElementById("place");
 photoAdd.addEventListener("submit", function (evt) {
   evt.preventDefault();
@@ -154,55 +161,36 @@ function createCard(imageSrc, titleText) {
     zoompopup.classList.remove("popup-hidden");
   });
 
-
   document.querySelector(".elements").prepend(clone);
 }
 
 const initialCards = [
   {
     name: "Vale de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
   },
   {
     name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
   },
   {
     name: "Montanhas Carecas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
   },
   {
     name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
   },
   {
     name: "Parque Nacional da Vanoise ",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
   },
   {
     name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg"
-  }
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
+  },
 ];
 
 initialCards.forEach((card) => {
   createCard(card.link, card.name);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
