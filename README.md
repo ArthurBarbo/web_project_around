@@ -24,8 +24,9 @@ Este projeto foi desenvolvido utilizando HTML, CSS e JavaScript, com o objetivo 
 2. **Clique na canetinha** no perfil para editar o nome e a descrição.
 3. Após fazer as edições, **clique em "Salvar"** ou **"Fechar"** para aplicar as mudanças ou sair sem salvar.
 
+## Novas Funcionalidades
 
-
-
-
-
+- Validação de Formulários: Validação em tempo real com mensagens de erro personalizadas e botão desabilitado quando os campos são inválidos.
+- Fechamento com Tecla ESC: Permite fechar qualquer popup pressionando a tecla "Escape".
+- Fechamento pelo Overlay: Popups também podem ser fechados clicando fora da área de conteúdo.
+- Essas melhorias tornam a navegação mais fluida e a experiência do usuário mais intuitiva.
