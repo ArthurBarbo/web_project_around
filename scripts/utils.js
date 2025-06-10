@@ -1,4 +1,4 @@
-export class PopupManager {
+export class Utils {
   constructor({
     form,
     title,
@@ -12,7 +12,7 @@ export class PopupManager {
     imageCards,
     zoomImg,
     zoomCaption,
-    zoompopup
+    zoompopup,
   }) {
     this._form = form;
     this._title = title;
@@ -46,27 +46,29 @@ export class PopupManager {
       this._popup.classList.add("popup");
     });
 
-    document.querySelectorAll(".popup__close,.popup__close-zoom").forEach((button) => {
-      button.addEventListener("click", () => {
-        const popup = button.closest(".popup");
-        if (popup) {
-          popup.classList.add("popup-hidden");
-          const form = popup.querySelector("form");
-          if (form) {
-            form.reset();
-            const inputs = form.querySelectorAll("input");
-            inputs.forEach((input) => {
-              input.classList.remove("popup__input_type_error");
-              const errorSpan = form.querySelector(`#${input.id}-error`);
-              if (errorSpan) {
-                errorSpan.textContent = "";
-                errorSpan.classList.remove("popup__error_visible");
-              }
-            });
+    document
+      .querySelectorAll(".popup__close,.popup__close-zoom")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const popup = button.closest(".popup");
+          if (popup) {
+            popup.classList.add("popup-hidden");
+            const form = popup.querySelector("form");
+            if (form) {
+              form.reset();
+              const inputs = form.querySelectorAll("input");
+              inputs.forEach((input) => {
+                input.classList.remove("popup__input_type_error");
+                const errorSpan = form.querySelector(`#${input.id}-error`);
+                if (errorSpan) {
+                  errorSpan.textContent = "";
+                  errorSpan.classList.remove("popup__error_visible");
+                }
+              });
+            }
           }
-        }
+        });
       });
-    });
 
     document.querySelectorAll(".popup").forEach((popup) => {
       popup.addEventListener("click", (event) => {
@@ -102,7 +104,9 @@ export class PopupManager {
         this._zoomImg.src = img.src;
         this._zoomImg.alt = img.alt;
 
-        const caption = img.closest(".elements__card").querySelector(".elements__text");
+        const caption = img
+          .closest(".elements__card")
+          .querySelector(".elements__text");
         this._zoomCaption.textContent = caption ? caption.textContent : "";
         this._zoompopup.classList.remove("popup-hidden");
       });
