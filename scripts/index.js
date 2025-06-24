@@ -1,3 +1,5 @@
+import { PopupWithImage } from "./PopupWithImage.js";
+import { Section } from "./Section.js";
 import { initialCards } from "./Card.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./formValidator.js";
@@ -19,29 +21,41 @@ const utils = new Utils({
   zoompopup: document.querySelector("#popup"),
 });
 
-const photoAdd = document.querySelector("#popup-addpic");
+const popupWithImage = new PopupWithImage(
+  "#popup",
+  document.querySelector("#popupimg"),
+  document.querySelector("#popupCaption")
+);
 
+function handleCardClick(name, link) {
+  popupWithImage.open({ name, link });
+}
+
+const photoAdd = document.querySelector("#popup-addpic");
 photoAdd.addEventListener("submit", function (evt) {
   evt.preventDefault();
 
   const imageSrc = document.getElementById("link").value;
   const titleText = document.getElementById("local-name").value;
 
-  const card = new Card(titleText, imageSrc, "#cardTemplate");
+  const card = new Card(titleText, imageSrc, "#cardTemplate", handleCardClick);
   const cardElement = card.generateCard();
-  document.querySelector(".elements").prepend(cardElement);
+  cardSection.addItem(cardElement);
 
   photoAdd.classList.add("popup-hidden");
 
   photoAdd.reset();
 });
 
-const cardContainer = document.querySelector(".elements");
-function renderInitialCards() {
-  initialCards.forEach((data) => {
-    const card = new Card(data.name, data.link, "#cardTemplate");
-    const cardElement = card.generateCard();
-    cardContainer.append(cardElement);
-  });
-}
-renderInitialCards();
+let cardSection;
+
+cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (data) => {
+      const card = new Card(data.name, data.link, "#cardTemplate");
+      return card.generateCard();
+    },
+  },
+  ".elements"
+);
