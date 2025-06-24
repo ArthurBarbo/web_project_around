@@ -1,3 +1,5 @@
+import { UserInfo } from "./UserInfo.js";
+import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
 import { initialCards } from "./Card.js";
@@ -31,22 +33,6 @@ function handleCardClick(name, link) {
   popupWithImage.open({ name, link });
 }
 
-const photoAdd = document.querySelector("#popup-addpic");
-photoAdd.addEventListener("submit", function (evt) {
-  evt.preventDefault();
-
-  const imageSrc = document.getElementById("link").value;
-  const titleText = document.getElementById("local-name").value;
-
-  const card = new Card(titleText, imageSrc, "#cardTemplate", handleCardClick);
-  const cardElement = card.generateCard();
-  cardSection.addItem(cardElement);
-
-  photoAdd.classList.add("popup-hidden");
-
-  photoAdd.reset();
-});
-
 let cardSection;
 
 cardSection = new Section(
@@ -59,3 +45,30 @@ cardSection = new Section(
   },
   ".elements"
 );
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__description",
+});
+
+const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
+  userInfo.setUserInfo({
+    name: formData.name,
+    about: formData.about,
+  });
+});
+
+profilePopup.setEventListeners();
+
+const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
+  const newCard = new Card(
+    formData["local-name"],
+    formData.link,
+    "#cardTemplate",
+    handleCardClick
+  );
+  const cardElement = newCard.generateCard();
+  cardSection.addItem(cardElement);
+});
+
+addPlacePopup.setEventListeners();
