@@ -10,12 +10,12 @@ export class Popup {
   };
 
   open() {
-    this._popup.classList.remove("popup__hidden");
+    this._popup.classList.remove("popup-hidden");
     document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
-    this._popup.classList.add("popup__hidden");
+    this._popup.classList.add("popup-hidden");
     document.removeEventListener("keydown", this._handleEscClose);
   }
 

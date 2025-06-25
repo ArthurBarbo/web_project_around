@@ -2,8 +2,7 @@ import { UserInfo } from "./UserInfo.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
-import { initialCards } from "./Card.js";
-import { Card } from "./Card.js";
+import { Card, initialCards } from "./Card.js";
 import { FormValidator } from "./formValidator.js";
 import { Utils } from "./utils.js";
 
@@ -30,6 +29,7 @@ const popupWithImage = new PopupWithImage(
 );
 
 function handleCardClick(name, link) {
+  console.log("handleCardClick chamada com:", name, link);
   popupWithImage.open({ name, link });
 }
 
@@ -39,7 +39,12 @@ cardSection = new Section(
   {
     items: initialCards,
     renderer: (data) => {
-      const card = new Card(data.name, data.link, "#cardTemplate");
+      const card = new Card(
+        data.name,
+        data.link,
+        "#cardTemplate",
+        handleCardClick
+      );
       return card.generateCard();
     },
   },
