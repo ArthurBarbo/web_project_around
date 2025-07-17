@@ -1,9 +1,8 @@
-
 import { UserInfo } from "./UserInfo.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
-import { Card, } from "./Card.js";
+import { Card } from "./Card.js";
 import { Api } from "./Api.js";
 import { FormValidator } from "./formValidator.js";
 import { Utils } from "./utils.js";
@@ -31,29 +30,32 @@ const api = new Api({
     "Content-type": "application/json",
   },
 });
+
+let cardSection;
+
 api
   .getCards()
   .then((res) => res.json())
   .then((data) => {
-const cardSection = new Section(
-  {
-    items: data,
-    renderer: (item) => {
-      const card = new Card(
-        item.name,
-        item.link,
-        "#cardTemplate",
-        handleCardClick
-      );
-      return card.generateCard();
-    },
-  },
-  ".elements"
-);
-
-cardSection.render();
-})
-.catch((err) => console.error("erro ao buscar Cards:", err));
+    cardSection = new Section(
+      {
+        items: data,
+        renderer: (item) => {
+          const card = new Card(
+            item.name,
+            item.link,
+            "#cardTemplate",
+            handleCardClick,
+            () => api.deleteCard(item._id)
+          );
+          return card.generateCard();
+        },
+      },
+      ".elements"
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => console.error("erro ao buscar Cards:", err));
 
 const popupWithImage = new PopupWithImage(
   "#popup",
@@ -82,14 +84,28 @@ const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
 profilePopup.setEventListeners();
 
 const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
-  const newCard = new Card(
-    formData["local-name"],
-    formData.link,
-    "#cardTemplate",
-    handleCardClick
-  );
-  const cardElement = newCard.generateCard();
-  cardSection.addItem(cardElement);
+  api
+    .createCard({
+      name: formData["local-name"],
+      link: formData.link,
+      isLiked: false,
+    })
+    .then((newCard) => {
+      const card = new Card(
+        newCard.name,
+        newCard.link,
+        "#cardTemplate",
+        handleCardClick,
+        () => {
+          return api.deleteCard(newCard._id);
+        }
+      );
+      const cardElement = card.generateCard();
+      cardSection.addItem(cardElement);
+      addPlacePopup.close();
+    })
+
+    .catch((err) => console.error("erro ao criar card", err));
 });
 
 addPlacePopup.setEventListeners();

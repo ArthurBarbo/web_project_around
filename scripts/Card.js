@@ -1,9 +1,10 @@
 class Card {
-  constructor(name, linkUrl, templateSelector, handleCardClick) {
+  constructor(name, linkUrl, templateSelector, handleCardClick, onDelete) {
     this._name = name;
     this._linkUrl = linkUrl;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._onDelete = onDelete;
   }
 
   _getTemplate() {
@@ -22,7 +23,22 @@ class Card {
 
   _setEventListener() {
     this._likeBTN.addEventListener("click", (evt) => this._handleLike(evt));
-    this._deleteButton.addEventListener("click", () => this._handleDelete());
+    this._deleteButton.addEventListener("click", () => {
+      if (typeof this._onDelete === "function") {
+        this._onDelete()
+          .then(() => {
+            this._element.remove();
+            this._element = null;
+          })
+          .catch((err) => {
+            console.error("erro ao deletar o card", err);
+          });
+      } else {
+        this._element.remove();
+        this._element = null;
+      }
+    });
+
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._name, this._linkUrl)
     );
@@ -46,31 +62,5 @@ class Card {
   }
 }
 
-// export const initialCards = [
-  // {
-    // name: "Vale de Yosemite",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-  // },
-  // {
-    // name: "Lago Louise",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-  // },
-  // {
-    // name: "Montanhas Carecas",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  // },
-  // {
-    // name: "Latemar",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  // },
-  // {
-    // name: "Parque Nacional da Vanoise ",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  // },
-  // {
-    // name: "Lago di Braies",
-    // link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  // },
-// ];
 
 export { Card };
