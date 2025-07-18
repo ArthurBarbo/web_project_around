@@ -1,4 +1,5 @@
 import { UserInfo } from "./UserInfo.js";
+// import { PopupWithConfirmation } from "./PopupwithConfirmation.js"
 import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
@@ -27,26 +28,41 @@ const api = new Api({
   baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
   headers: {
     authorization: "79b24936-a205-4985-b1d0-6eeb1d8f406b",
-    "Content-type": "application/json",
+    "Content-Type": "application/json",
   },
 });
+// const confirmDeletePopup = new PopupWithConfirmation("#popup-confirm-delete");
+// confirmDeletePopup.setEventListeners();
+
+const onLike = (id, isLiked) => {
+  if (isLiked) {
+    return api.likeCard(id);
+  } else {
+    return api.unlikeCard(id);
+  }
+};
 
 let cardSection;
 
 api
   .getCards()
-  .then((res) => res.json())
   .then((data) => {
+    console.log("Resposta da API:", data); // ← VERIFIQUE isso no console
     cardSection = new Section(
       {
         items: data,
         renderer: (item) => {
           const card = new Card(
-            item.name,
-            item.link,
+            {
+              name: item.name,
+              linkUrl: item.link,
+              id: item._id,
+              isLiked: item.isLiked || false,
+            },
             "#cardTemplate",
             handleCardClick,
-            () => api.deleteCard(item._id)
+            () => api.deleteCard(item._id),
+            onLike
           );
           return card.generateCard();
         },
@@ -74,11 +90,34 @@ const userInfo = new UserInfo({
   aboutSelector: ".profile__description",
 });
 
-const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
-  userInfo.setUserInfo({
-    name: formData.name,
-    about: formData.about,
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      about: userData.about,
+    });
+  })
+  .catch((err) => {
+    console.error("Erro ao carregar dados do usuário:", err);
   });
+
+const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
+  api
+    .updateUserInfo({
+      name: formData.name,
+      about: formData.about,
+    })
+    .then((updatedUser) => {
+      userInfo.setUserInfo({
+        name: updatedUser.name,
+        about: updatedUser.about,
+      });
+      profilePopup.close();
+    })
+    .catch((err) => {
+      console.error("Erro ao atualizar perfil:", err);
+    });
 });
 
 profilePopup.setEventListeners();
@@ -92,13 +131,16 @@ const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
     })
     .then((newCard) => {
       const card = new Card(
-        newCard.name,
-        newCard.link,
+        {
+          name: newCard.name,
+          linkUrl: newCard.link,
+          id: newCard._id,
+          isLiked: newCard.isLiked || false,
+        },
         "#cardTemplate",
         handleCardClick,
-        () => {
-          return api.deleteCard(newCard._id);
-        }
+        () => api.deleteCard(newCard._id),
+        onLike
       );
       const cardElement = card.generateCard();
       cardSection.addItem(cardElement);

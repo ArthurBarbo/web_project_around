@@ -1,10 +1,19 @@
 class Card {
-  constructor(name, linkUrl, templateSelector, handleCardClick, onDelete) {
+  constructor(
+    { name, linkUrl, id, isLiked },
+    templateSelector,
+    handleCardClick,
+    onDelete,
+    onLike
+  ) {
     this._name = name;
     this._linkUrl = linkUrl;
+    this._id = id;
+    this._isLiked = isLiked;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._onDelete = onDelete;
+    this._onLike = onLike;
   }
 
   _getTemplate() {
@@ -12,8 +21,24 @@ class Card {
     return template.content.querySelector(".elements__card").cloneNode(true);
   }
 
+  _updateLikeView() {
+    if (this._isLiked) {
+      this._likeBTN.classList.add("elements__like-on");
+    } else {
+      this._likeBTN.classList.remove("elements__like-on");
+    }
+  }
+
   _handleLike(evt) {
     evt.target.classList.toggle("elements__like-on");
+    this._isLiked = !this._isLiked;
+    if (typeof this._onLike === "function") {
+      this._onLike(this._id, this._isLiked).catch((err) => {
+        evt.target.classList.toggle("elements__like-on");
+        this._isLiked = !this._isLiked;
+        console.error("erro ao curtir/descurtir card:", err);
+      });
+    }
   }
 
   _handleDelete() {
@@ -27,15 +52,13 @@ class Card {
       if (typeof this._onDelete === "function") {
         this._onDelete()
           .then(() => {
-            this._element.remove();
-            this._element = null;
+            this._handleDelete();
           })
           .catch((err) => {
             console.error("erro ao deletar o card", err);
           });
       } else {
-        this._element.remove();
-        this._element = null;
+        this._handleDelete;
       }
     });
 
@@ -56,11 +79,11 @@ class Card {
     this._image.alt = this._name;
     caption.textContent = this._name;
 
+    this._updateLikeView();
     this._setEventListener();
 
     return this._element;
   }
 }
-
 
 export { Card };

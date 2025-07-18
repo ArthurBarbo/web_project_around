@@ -7,6 +7,11 @@ export default class Api {
   getCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao buscar cards: ${res.status}`);
+      }
+      return res.json();
     });
   }
   createCard(card) {
@@ -21,6 +26,30 @@ export default class Api {
       return res.json();
     });
   }
+  likeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao dar like: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
+
+  unlikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao remover like: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
+
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
@@ -32,6 +61,31 @@ export default class Api {
       return res.json();
     });
   }
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao buscar perfil: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
+
+  updateUserInfo({ name, about }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ name, about }),
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao atualizar perfil: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
 }
 
 export { Api };
+
+// 2 CHAMADAS DE CARTÃO
