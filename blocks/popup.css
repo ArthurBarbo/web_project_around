@@ -78,8 +78,30 @@
   font-size: 14px;
   border: none;
   border-bottom: 1px solid #00000065;
-  margin-top:25px;
+  margin-top: 25px;
   padding: 0 0 13px;
+}
+
+.popup__confirm {
+  min-height: 181px;
+}
+
+.popup__text-confirm {
+  margin-bottom: 38px;
+}
+.popup__save-confirm {
+  width: 358px;
+  height: 50px;
+  background: rgba(0, 0, 0, 1);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  text-align: center;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+
 }
 
 .popup__save:hover {
@@ -139,7 +161,6 @@
 
 .popup__error_visible {
   display: block;
-
 }
 
 .popup__button_disabled {
@@ -165,7 +186,6 @@
   .popup__text {
     width: 238px;
     font-size: 18px;
-
   }
   .popup__name {
     width: 238px;
@@ -183,8 +203,7 @@
     margin-top: 25px;
   }
 
-  .popup__error{
+  .popup__error {
     width: 220px;
-
   }
 }

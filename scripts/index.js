@@ -1,5 +1,5 @@
 import { UserInfo } from "./UserInfo.js";
-// import { PopupWithConfirmation } from "./PopupwithConfirmation.js"
+import { PopupWithConfirmation } from "./PopupwithConfirmation.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
@@ -31,8 +31,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-// const confirmDeletePopup = new PopupWithConfirmation("#popup-confirm-delete");
-// confirmDeletePopup.setEventListeners();
 
 const onLike = (id, isLiked) => {
   if (isLiked) {
@@ -61,7 +59,18 @@ api
             },
             "#cardTemplate",
             handleCardClick,
-            () => api.deleteCard(item._id),
+            () => {
+              popupConfirm.setSubmitAction(() => {
+                api
+                  .deleteCard(item._id)
+                  .then(() => {
+                    card._handleDelete();
+                    popupConfirm.close();
+                  })
+                  .catch((err) => console.error("Erro ao excluir card:", err));
+              });
+              popupConfirm.open();
+            },
             onLike
           );
           return card.generateCard();
@@ -79,6 +88,9 @@ const popupWithImage = new PopupWithImage(
   document.querySelector("#popupCaption")
 );
 popupWithImage.setEventListeners();
+
+const popupConfirm = new PopupWithConfirmation("#popup-confirm");
+popupConfirm.setEventListeners();
 
 function handleCardClick(name, link) {
   console.log("handleCardClick chamada com:", name, link);
@@ -139,9 +151,22 @@ const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
         },
         "#cardTemplate",
         handleCardClick,
-        () => api.deleteCard(newCard._id),
+
+        () => {
+          popupConfirm.setSubmitAction(() => {
+            api
+              .deleteCard(newCard._id)
+              .then(() => {
+                card._handleDelete();
+                popupConfirm.close();
+              })
+              .catch((err) => console.error("erro ao excluir card:", err));
+          });
+          popupConfirm.open();
+        },
         onLike
       );
+
       const cardElement = card.generateCard();
       cardSection.addItem(cardElement);
       addPlacePopup.close();
