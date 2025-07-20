@@ -1,6 +1,6 @@
 class Card {
   constructor(
-    { name, linkUrl, id, isLiked },
+    { name, linkUrl, id, isLiked, ownerId, currentUserId },
     templateSelector,
     handleCardClick,
     onDelete,
@@ -10,6 +10,8 @@ class Card {
     this._linkUrl = linkUrl;
     this._id = id;
     this._isLiked = isLiked;
+    this._ownerId=ownerId;
+    this._currentUserId= currentUserId;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._onDelete = onDelete;
@@ -78,6 +80,10 @@ class Card {
     this._image.src = this._linkUrl;
     this._image.alt = this._name;
     caption.textContent = this._name;
+
+    if(this._ownderId !== this._currentUserId){
+      this._deleteButton.style.display = "none";
+    }
 
     this._updateLikeView();
     this._setEventListener();

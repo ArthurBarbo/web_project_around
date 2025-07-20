@@ -1,7 +1,7 @@
-import Api from "./Api.js";
+import { Api } from "./Api.js";
 import { Popup } from "./Popup.js";
 
-export class PopupWithForm extends Popup{
+export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
@@ -11,10 +11,10 @@ export class PopupWithForm extends Popup{
 
   _getInputValues() {
     const formValues = {};
-    this._inputList.forEach(input => {
+    this._inputList.forEach((input) => {
       formValues[input.name] = input.value;
     });
-    return formValues
+    return formValues;
   }
   setEventListeners() {
     super.setEventListeners();

@@ -84,8 +84,18 @@ export default class Api {
       return res.json();
     });
   }
+
+updateAvatar(avatarUrl) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar: avatarUrl }),
+    }).then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Erro ao atualizar avatar: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
 }
-
 export { Api };
-
-// 2 CHAMADAS DE CARTÃO

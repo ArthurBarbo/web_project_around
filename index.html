@@ -19,11 +19,14 @@
     </header>
     <main class="main page__section">
       <section class="profile">
-        <img
-          class="profile__avatar"
-          src="./images/avatar.jpg"
-          alt="Jacques Cousteau, foto de perfil"
-        />
+        <div class="profile__avatar-container">
+          <img
+            class="profile__avatar"
+            src="./images/avatar.jpg"
+            alt="Jacques Cousteau, foto de perfil"
+          />
+          <div class="profile__avatar-overlay"></div>
+        </div>
         <div class="profile__text">
           <h1 class="profile__name">Jacques Cousteau</h1>
           <button
@@ -135,18 +138,42 @@
     </div>
 
     <div class="popup popup-hidden" id="popup-confirm">
-  <div class="popup__conteiner popup__confirm">
-    <button class="popup__close" type="button"></button>
-    <h2 class="popup__text popup__text-confirm">Tem Certeza?</h2>
-      <button
-        class="popup__save-confirm"
-        id="save"
-        type="submit"
-      >
-        Sim
-      </button>
-  </div>
-</div>
+      <div class="popup__conteiner popup__confirm">
+        <button class="popup__close" type="button"></button>
+        <h2 class="popup__text popup__text-confirm">Tem Certeza?</h2>
+        <button class="popup__save-confirm" id="save" type="submit">Sim</button>
+      </div>
+    </div>
+
+    <div class="popup popup-hidden" id="popup-avatar">
+      <div class="popup__conteiner">
+        <button
+          class="popup__close"
+          id="close"
+          type="button"
+          aria-label="close form"
+        ></button>
+        <h2 class="popup__text">Alterar a Foto de Perfil</h2>
+        <form class= "popup__avatar-form" id="avatar-form" novalidate>
+          <input
+            class="popup__avatar"
+            type="url"
+            id="avatar-link"
+            name="avatar"
+            placeholder="Link para foto de perfil"
+            required
+          />
+          <span id="avatar-link-error" class="popup__error"></span>
+          <button
+            class="popup__save popup__button_disabled"
+            type="submit"
+            aria-label="save form"
+          >
+            Salvar
+          </button>
+        </form>
+      </div>
+    </div>
 
     <template id="cardTemplate">
       <article class="elements__card">

@@ -5,7 +5,7 @@ import { PopupWithImage } from "./PopupWithImage.js";
 import { Section } from "./Section.js";
 import { Card } from "./Card.js";
 import { Api } from "./Api.js";
-import { FormValidator } from "./formValidator.js";
+import { FormValidator, validation } from "./formValidator.js";
 import { Utils } from "./utils.js";
 
 const utils = new Utils({
@@ -41,47 +41,51 @@ const onLike = (id, isLiked) => {
 };
 
 let cardSection;
-
-api
-  .getCards()
-  .then((data) => {
-    console.log("Resposta da API:", data); // ← VERIFIQUE isso no console
-    cardSection = new Section(
-      {
-        items: data,
-        renderer: (item) => {
-          const card = new Card(
-            {
-              name: item.name,
-              linkUrl: item.link,
-              id: item._id,
-              isLiked: item.isLiked || false,
-            },
-            "#cardTemplate",
-            handleCardClick,
-            () => {
-              popupConfirm.setSubmitAction(() => {
-                api
-                  .deleteCard(item._id)
-                  .then(() => {
-                    card._handleDelete();
-                    popupConfirm.close();
-                  })
-                  .catch((err) => console.error("Erro ao excluir card:", err));
-              });
-              popupConfirm.open();
-            },
-            onLike
-          );
-          return card.generateCard();
+function loadCards() {
+  api
+    .getCards()
+    .then((data) => {
+      console.log("Resposta da API:", data);
+      cardSection = new Section(
+        {
+          items: data,
+          renderer: (item) => {
+            const card = new Card(
+              {
+                name: item.name,
+                linkUrl: item.link,
+                id: item._id,
+                isLiked: item.isLiked || false,
+                ownerId: item.owner._id,
+                currentUserId: currentUserId,
+              },
+              "#cardTemplate",
+              handleCardClick,
+              () => {
+                popupConfirm.setSubmitAction(() => {
+                  api
+                    .deleteCard(item._id)
+                    .then(() => {
+                      card._handleDelete();
+                      popupConfirm.close();
+                    })
+                    .catch((err) =>
+                      console.error("Erro ao excluir card:", err)
+                    );
+                });
+                popupConfirm.open();
+              },
+              onLike
+            );
+            return card.generateCard();
+          },
         },
-      },
-      ".elements"
-    );
-    cardSection.renderItems();
-  })
-  .catch((err) => console.error("erro ao buscar Cards:", err));
-
+        ".elements"
+      );
+      cardSection.renderItems();
+    })
+    .catch((err) => console.error("erro ao buscar Cards:", err));
+}
 const popupWithImage = new PopupWithImage(
   "#popup",
   document.querySelector("#popupimg"),
@@ -102,13 +106,17 @@ const userInfo = new UserInfo({
   aboutSelector: ".profile__description",
 });
 
+let currentUserId;
 api
   .getUserInfo()
   .then((userData) => {
+    currentUserId = userData._id;
     userInfo.setUserInfo({
       name: userData.name,
       about: userData.about,
     });
+    document.querySelector(".profile__avatar").src = userData.avatar;
+    loadCards();
   })
   .catch((err) => {
     console.error("Erro ao carregar dados do usuário:", err);
@@ -139,7 +147,6 @@ const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
     .createCard({
       name: formData["local-name"],
       link: formData.link,
-      isLiked: false,
     })
     .then((newCard) => {
       const card = new Card(
@@ -176,3 +183,41 @@ const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
 });
 
 addPlacePopup.setEventListeners();
+
+const avatarOverlay = document.querySelector(".profile__avatar-overlay");
+const avatarPopup = document.querySelector("#popup-avatar");
+const avatarPopupForm = new PopupWithForm("#popup-avatar", (formData) => {
+  if (!isValidUrl(formData.avatar)) {
+    return Promise.reject("URL do avatar Inválida");
+  }
+  console.log("enviando para updateAvatar:", formData.avatar);
+  return api
+    .updateAvatar(formData.avatar)
+    .then((res) => {
+      document.querySelector(".profile__avatar").src = res.avatar;
+      avatarPopupForm.close();
+    })
+    .catch((err) => {
+      console.error("Erro ao atualizar avatar:", err);
+    });
+});
+
+avatarPopupForm.setEventListeners();
+
+avatarOverlay.addEventListener("click", () => {
+  avatarPopupForm.open();
+});
+
+const avatarFormValidator = new FormValidator(
+  validation,
+  document.querySelector(".popup__avatar-form")
+);
+avatarFormValidator.enableValidation();
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}

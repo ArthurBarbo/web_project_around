@@ -57,7 +57,7 @@ class FormValidator {
 }
 
 const validation = {
-  inputSelector: ".popup__name, .popup__about",
+  inputSelector:" .popup__name, .popup__about, .popup__avatar",
   errorClass: "popup__error_visible",
   inputErrorClass: "popup__input_type_error",
   submitButtonSelector: ".popup__save",
@@ -76,4 +76,10 @@ const placeFormValidator = new FormValidator(
 );
 placeFormValidator.enableValidation();
 
-export { FormValidator };
+const avatarFormValidator = new FormValidator(
+  validation,
+  document.querySelector(".popup__avatar-form")
+);
+avatarFormValidator.enableValidation();
+
+export { FormValidator, validation };
