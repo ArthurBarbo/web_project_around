@@ -18,10 +18,6 @@ const utils = new Utils({
   editprofile: document.querySelector(".profile__pen"),
   addpic: document.querySelector(".profile__plus"),
   photoAdd: document.querySelector("#popup-addpic"),
-  imageCards: document.querySelectorAll(".elements__image"),
-  zoomImg: document.querySelector("#popupimg"),
-  zoomCaption: document.querySelector("#popupCaption"),
-  zoompopup: document.querySelector("#popup"),
 });
 
 const api = new Api({
