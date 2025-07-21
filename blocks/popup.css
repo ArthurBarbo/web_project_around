@@ -86,7 +86,7 @@
   min-height: 181px;
 }
 
-.popup__avatar{
+.popup__avatar {
   font-weight: 400;
   font-size: 14px;
   border: none;
@@ -94,7 +94,6 @@
   margin-top: 25px;
   padding: 0 0 13px;
 }
-
 
 .popup__text-confirm {
   margin-bottom: 38px;
@@ -136,10 +135,9 @@
   flex-direction: column;
   width: 358px;
 }
-.popup__avatar-form{
+.popup__avatar-form {
   display: flex;
   flex-direction: column;
-  width: 358px;
 }
 
 .popup__zoom {

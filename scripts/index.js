@@ -123,7 +123,7 @@ api
   });
 
 const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
-  api
+  return api
     .updateUserInfo({
       name: formData.name,
       about: formData.about,
@@ -143,7 +143,7 @@ const profilePopup = new PopupWithForm("#popup-profile", (formData) => {
 profilePopup.setEventListeners();
 
 const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
-  api
+  return api
     .createCard({
       name: formData["local-name"],
       link: formData.link,
