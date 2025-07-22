@@ -1,45 +1,55 @@
 # Tripleten web_project_around
 
-# Around Us
+## Around Us
 
-https://arthurbarbo.github.io/web_project_around/
+[👉 Live Project Link](https://arthurbarbo.github.io/web_project_around/)
 
-Este projeto foi desenvolvido utilizando HTML, CSS e JavaScript, com o objetivo de apresentar um layout interativo e funcional. A aplicação permite a edição do perfil do usuário diretamente na página, incluindo a modificação do nome e da descrição. Além disso, oferece interações dinâmicas com popups para criar e editar cards com imagens. Cada card pode receber curtidas, ser removido e exibe uma experiência visual envolvente para o usuário.
+This project was developed using **HTML**, **CSS**, and **JavaScript** with the goal of delivering an interactive and functional layout. The application allows users to edit their profile directly on the page, including changing their name and description. It also offers dynamic interactions through popups for creating and editing image cards. Each card can be liked, deleted, and contributes to an engaging visual experience for the user.
 
-## Tecnologias Usadas
+---
 
-- **HTML**: Estrutura e marcação do conteúdo.
-- **CSS**: Estilização da página, com foco na responsividade e design atraente.
-- **JavaScript**: Adicionando interatividade, como abrir e fechar popups, e atualizar conteúdo na página.
+## 🛠️ Technologies Used
 
-## Funcionalidades
+- **HTML** – Structure and content markup
+- **CSS** – Page styling focused on responsiveness and attractive design
+- **JavaScript** – Interactivity like opening popups, closing them, and updating content dynamically
 
-- **Edição do Perfil**: Permite ao usuário editar o nome e a descrição do perfil.
-- **Popup de Edição**: Exibe um formulário popup para modificar informações.
-- **Responsividade**: O layout se ajusta a diferentes tamanhos de tela para uma melhor experiência.
-- **Validação de Formulários**: Validação em tempo real com mensagens de erro personalizadas e botão desabilitado quando os campos são inválidos.
-- **Fechamento com Tecla ESC**: Permite fechar qualquer popup pressionando a tecla "Escape".
-- **Fechamento pelo Overlay**: Popups também podem ser fechados clicando fora da área de conteúdo.
+---
 
-## Como Usar
+## 🚀 Features
 
-1. **Abra o projeto** em seu navegador.
-2. **Clique na canetinha** no perfil para editar o nome e a descrição.
-3. Após fazer as edições, **clique em "Salvar"** ou **"Fechar"** para aplicar as mudanças ou sair sem salvar.
-4. **Curta ou descurta** os cards, que podem ser adicionados por você ou por outras pessoas.
-5. Altere a foto de **perfil**.
-6. veja tudo sendo retornado pela Api.
+- **Profile Editing** – Users can edit their name and profile description
+- **Edit Popup** – Displays a popup form to modify user info
+- **Responsive Layout** – Adjusts to various screen sizes for better UX
+- **Form Validation** – Real-time feedback with custom error messages and disabled submit button when fields are invalid
+- **ESC Key Close** – Close any popup using the "Escape" key
+- **Overlay Close** – Close popups by clicking outside the popup area
 
-Se quiser assistir como utilizar segue o **link**: https://www.loom.com/share/e4d42a4539b64bbdb6242c910393f0ae, é só copiar e colar no navegador.
+---
 
-## Novas Funcionalidades
+## 📌 How to Use
 
-- Retorno e salvamento pela Api.
-- Popup de confirmação para exclusão do card.
-- Essas melhorias tornam a navegação mais fluida e a experiência do usuário mais intuitiva.
-- Alteração de foto de Perfil que é armazenada e retornada pela Api.
-- Curtidas que são retornadas pela Api.
+1. **Open the project** in your browser
+2. **Click the pencil icon** on the profile to edit your name and description
+3. Click **"Save"** or **"Close"** to apply changes or exit
+4. **Like or unlike** cards – they can be added by you or others
+5. **Change your profile picture**
+6. All data is fetched from and saved to the **API**
 
-## Melhorias
+🎥 [Watch the usage demo](https://www.loom.com/share/e4d42a4539b64bbdb6242c910393f0ae)
 
-- Popups e integração de Retorno da Api (**Principal**).
+---
+
+## ✨ New Functionalities
+
+- Data is now fetched and saved via the API
+- Confirmation popup for card deletion
+- Improved navigation and more intuitive UX
+- Profile picture is updated and retrieved from the API
+- Likes are managed and synced via the API
+
+---
+
+## 🔧 Improvements
+
+- Full popup handling and API integration (**Main improvement**)
