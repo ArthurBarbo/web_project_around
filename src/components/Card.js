@@ -81,7 +81,7 @@ class Card {
     this._image.alt = this._name;
     caption.textContent = this._name;
 
-    if(this._ownderId !== this._currentUserId){
+    if(this._ownerId !== this._currentUserId){
       this._deleteButton.style.display = "none";
     }
 

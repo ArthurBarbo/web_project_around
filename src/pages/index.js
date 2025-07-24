@@ -1,12 +1,12 @@
-import { UserInfo } from "./UserInfo.js";
-import { PopupWithConfirmation } from "./PopupwithConfirmation.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { Section } from "./Section.js";
-import { Card } from "./Card.js";
-import { Api } from "./Api.js";
-import { FormValidator, validation } from "./formValidator.js";
-import { Utils } from "./utils.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { PopupWithConfirmation } from "../components/PopupwithConfirmation.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { Section } from "../components/Section.js";
+import { Card } from "../components/Card.js";
+import { Api } from "../components/Api.js";
+import { FormValidator, validation } from "../components/formValidator.js";
+import { Utils } from "../components/utils.js";
 
 const utils = new Utils({
   form: document.querySelector(".popup__profile"),
@@ -37,6 +37,36 @@ const onLike = (id, isLiked) => {
 };
 
 let cardSection;
+function createCard(item) {
+  const card = new Card(
+    {
+      name: item.name,
+      linkUrl: item.link,
+      id: item._id,
+      isLiked: item.isLiked || false,
+      ownerId: item.owner?._id,
+      currentUserId: currentUserId,
+    },
+    "#cardTemplate",
+    handleCardClick,
+    () => {
+      popupConfirm.setSubmitAction(() => {
+        api
+          .deleteCard(item._id)
+          .then(() => {
+            card._handleDelete();
+            popupConfirm.close();
+          })
+          .catch((err) => console.error("Erro ao excluir card:", err));
+      });
+      popupConfirm.open();
+    },
+    onLike
+  );
+
+  return card.generateCard();
+}
+
 function loadCards() {
   api
     .getCards()
@@ -45,37 +75,9 @@ function loadCards() {
       cardSection = new Section(
         {
           items: data,
-          renderer: (item) => {
-            const card = new Card(
-              {
-                name: item.name,
-                linkUrl: item.link,
-                id: item._id,
-                isLiked: item.isLiked || false,
-                ownerId: item.owner._id,
-                currentUserId: currentUserId,
-              },
-              "#cardTemplate",
-              handleCardClick,
-              () => {
-                popupConfirm.setSubmitAction(() => {
-                  api
-                    .deleteCard(item._id)
-                    .then(() => {
-                      card._handleDelete();
-                      popupConfirm.close();
-                    })
-                    .catch((err) =>
-                      console.error("Erro ao excluir card:", err)
-                    );
-                });
-                popupConfirm.open();
-              },
-              onLike
-            );
-            return card.generateCard();
-          },
+          renderer: (item) => createCard(item),
         },
+
         ".elements"
       );
       cardSection.renderItems();
@@ -145,32 +147,8 @@ const addPlacePopup = new PopupWithForm("#popup-addpic", (formData) => {
       link: formData.link,
     })
     .then((newCard) => {
-      const card = new Card(
-        {
-          name: newCard.name,
-          linkUrl: newCard.link,
-          id: newCard._id,
-          isLiked: newCard.isLiked || false,
-        },
-        "#cardTemplate",
-        handleCardClick,
-
-        () => {
-          popupConfirm.setSubmitAction(() => {
-            api
-              .deleteCard(newCard._id)
-              .then(() => {
-                card._handleDelete();
-                popupConfirm.close();
-              })
-              .catch((err) => console.error("erro ao excluir card:", err));
-          });
-          popupConfirm.open();
-        },
-        onLike
-      );
-
-      const cardElement = card.generateCard();
+      newCard.owner = { _id: currentUserId };
+      const cardElement = createCard(newCard);
       cardSection.addItem(cardElement);
       addPlacePopup.close();
     })
@@ -204,11 +182,6 @@ avatarOverlay.addEventListener("click", () => {
   avatarPopupForm.open();
 });
 
-const avatarFormValidator = new FormValidator(
-  validation,
-  document.querySelector(".popup__avatar-form")
-);
-avatarFormValidator.enableValidation();
 function isValidUrl(string) {
   try {
     new URL(string);
